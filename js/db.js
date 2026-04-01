@@ -8,8 +8,10 @@ apikey: "AIzaSyDLvK-Q4v1hZ2B-mtxZzNXs5m1tCS6LdGw",
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// LOADER
+// REMOVE LOADER AFTER PAGE LOAD
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
-  if (loader) loader.style.display = "none";
+  if (loader) {
+    loader.style.display = "none";
+  }
 });
