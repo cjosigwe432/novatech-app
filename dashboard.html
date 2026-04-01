@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaTech Dashboard</title>
 
   <link rel="stylesheet" href="css/style.css">
 
@@ -14,15 +15,49 @@
 
 <body>
 
-<div class="container">
-  <h2>Dashboard</h2>
+<div class="layout">
 
-  <p id="userEmail"></p>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>NovaTech</h2>
+    <ul>
+      <li>Dashboard</li>
+      <li>Messages</li>
+      <li>Settings</li>
+    </ul>
+    <button onclick="logout()">Logout</button>
+  </aside>
 
-  <button onclick="logout()">Logout</button>
+  <!-- MAIN CONTENT -->
+  <main class="main">
 
-  <h3>Messages</h3>
-  <div id="messages"></div>
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <h2>Dashboard</h2>
+      <p id="userEmail"></p>
+    </div>
+
+    <!-- STATS CARDS -->
+    <div class="cards">
+      <div class="card">
+        <h3>Messages</h3>
+        <p id="messageCount">0</p>
+      </div>
+
+      <div class="card">
+        <h3>Status</h3>
+        <p>Active</p>
+      </div>
+    </div>
+
+    <!-- MESSAGES LIST -->
+    <div class="card full">
+      <h3>Recent Messages</h3>
+      <div id="messages">Loading...</div>
+    </div>
+
+  </main>
+
 </div>
 
 <script src="js/db.js"></script>
