@@ -1,8 +1,8 @@
 // 🔥 PASTE YOUR FIREBASE CONFIG HERE
 const firebaseConfig = {
-  apiKey:  "AIzaSyDLvK-Q4v1hZ2B-mtxZzNXs5m1tCS6LdGw",
-  authDomain: "-3ebbe.firebaseapp.com",
-  projectId: "-app-3ebbe",
+apikey: "AIzaSyDLvK-Q4v1hZ2B-mtxZzNXs5m1tCS6LdGw",
+  authDomain: "neobank-app-3ebbe.firebaseapp.com",
+  projectId: "neobank-app-3ebbe",
 };
 
 firebase.initializeApp(firebaseConfig);
