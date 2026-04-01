@@ -1,4 +1,4 @@
-// AUTH CHECK
+// Auth check
 auth.onAuthStateChanged(user => {
   if (user) {
     document.getElementById("userEmail").innerText = user.email;
@@ -8,25 +8,28 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// LOGOUT
+// Logout
 function logout() {
   auth.signOut().then(() => {
     window.location.href = "index.html";
   });
 }
 
-// LOAD MESSAGES
+// Load messages
 function loadMessages() {
   const messagesDiv = document.getElementById("messages");
+  const countDiv = document.getElementById("messageCount");
 
   db.collection("messages").orderBy("createdAt", "desc").get()
     .then(snapshot => {
       messagesDiv.innerHTML = "";
+      countDiv.innerText = snapshot.size;
 
       snapshot.forEach(doc => {
         const data = doc.data();
+
         messagesDiv.innerHTML += `
-          <p><b>${data.name}</b>: ${data.message}</p>
+          <p><strong>${data.name}</strong>: ${data.message}</p>
         `;
       });
     });
