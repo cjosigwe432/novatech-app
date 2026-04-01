@@ -1,38 +1,33 @@
-// CHECK LOGIN
-firebase.auth().onAuthStateChanged(user => {
-  if (!user) {
-    window.location.href = "index.html";
-  } else {
+// AUTH CHECK
+auth.onAuthStateChanged(user => {
+  if (user) {
     document.getElementById("userEmail").innerText = user.email;
     loadMessages();
+  } else {
+    window.location.href = "index.html";
   }
 });
 
-// LOAD MESSAGES
-function loadMessages() {
-  db.collection("messages").get().then(snapshot => {
-    let html = "";
-
-    snapshot.forEach(doc => {
-      const data = doc.data();
-
-      html += `
-        <div>
-          <h4>${data.name}</h4>
-          <p>${data.email}</p>
-          <p>${data.message}</p>
-          <hr>
-        </div>
-      `;
-    });
-
-    document.getElementById("messages").innerHTML = html;
+// LOGOUT
+function logout() {
+  auth.signOut().then(() => {
+    window.location.href = "index.html";
   });
 }
 
-// LOGOUT
-function logout() {
-  firebase.auth().signOut().then(() => {
-    window.location.href = "index.html";
-  });
+// LOAD MESSAGES
+function loadMessages() {
+  const messagesDiv = document.getElementById("messages");
+
+  db.collection("messages").orderBy("createdAt", "desc").get()
+    .then(snapshot => {
+      messagesDiv.innerHTML = "";
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        messagesDiv.innerHTML += `
+          <p><b>${data.name}</b>: ${data.message}</p>
+        `;
+      });
+    });
 }
