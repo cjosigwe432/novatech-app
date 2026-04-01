@@ -1,44 +1,38 @@
-function signup() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+document.addEventListener("DOMContentLoaded", function () {
 
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      document.getElementById("status").innerText = "Account created!";
-    })
-    .catch(err => {
-      document.getElementById("status").innerText = err.message;
+  const form = document.getElementById("contactForm");
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("contactEmail").value;
+      const message = document.getElementById("message").value;
+
+      // Simple validation
+      if (!name || !email || !message) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      // Save to Firestore (example)
+      db.collection("messages").add({
+        name: name,
+        email: email,
+        message: message,
+        createdAt: new Date()
+      })
+      .then(() => {
+        alert("Message sent successfully ✅");
+        form.reset();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Failed to send message ❌");
+      });
+
     });
-}
+  }
 
-function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(() => {
-      window.location.href = "dashboard.html";
-    })
-    .catch(err => {
-      document.getElementById("status").innerText = err.message;
-    });
-}
-
-// CONTACT FORM SAVE
-const form = document.getElementById("contactForm");
-
-if (form) {
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    await db.collection("messages").add({
-      name: document.getElementById("name").value,
-      email: document.getElementById("contactEmail").value,
-      message: document.getElementById("message").value,
-      createdAt: new Date()
-    });
-
-    alert("Message sent 🚀");
-    form.reset();
-  });
-}
+});
