@@ -1,36 +1,25 @@
-// Auth check
-auth.onAuthStateChanged(user => {
-  if (user) {
-    document.getElementById("userEmail").innerText = user.email;
-    loadMessages();
-  } else {
-    window.location.href = "index.html";
+function sendMoney() {
+  alert("Send money clicked 💸");
+}
+
+function requestMoney() {
+  alert("Request money clicked 💰");
+}
+
+// Chart
+const ctx = document.getElementById('chart');
+
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+    datasets: [{
+      label: 'Income',
+      data: [12, 19, 8, 15, 10],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true
   }
 });
-
-// Logout
-function logout() {
-  auth.signOut().then(() => {
-    window.location.href = "index.html";
-  });
-}
-
-// Load messages
-function loadMessages() {
-  const messagesDiv = document.getElementById("messages");
-  const countDiv = document.getElementById("messageCount");
-
-  db.collection("messages").orderBy("createdAt", "desc").get()
-    .then(snapshot => {
-      messagesDiv.innerHTML = "";
-      countDiv.innerText = snapshot.size;
-
-      snapshot.forEach(doc => {
-        const data = doc.data();
-
-        messagesDiv.innerHTML += `
-          <p><strong>${data.name}</strong>: ${data.message}</p>
-        `;
-      });
-    });
-}
